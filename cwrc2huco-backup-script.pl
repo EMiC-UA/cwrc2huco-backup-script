@@ -306,20 +306,6 @@ if (defined ($local_bag_state) && $local_bag_state eq "10") { # CWRC-pngbag-end.
 	setStatus("", $bag_id, $bag_states[$local_bag_state]);
 	log_message ("[bag state change][".$bag_filename."] state was successfully changed to ".$bag_states[$local_bag_state]."\n\n\n");
 	
-	if ($debug eq "false") {
-		# delete the unsplit and the split bags (there is currently no state change for this)
-		my $delete_command = "rm -f ".$bag_path."/".$bag_id."/*.tar.g*";
-		debug_message("[command][".$bag_filename."] In CWRC-run-end: Delete Tars command: ".$delete_command."\n");
-		my $delete_result = `$delete_command  2>&1`;
-		debug_message("[command output][".$bag_filename."] In CWRC-run-end: the Delete Tars command output: ".$delete_result."\n");
-		
-		# http://stackoverflow.com/questions/777543/how-can-i-read-the-error-output-of-external-commands-in-perl
-		my $errorReturn = "FAIL" if $?;
-		if (defined($errorReturn)) {
-			log_message ("\n\n***COMMAND-ERROR: [".$bag_filename."] error caught while trying to delete the tars of this bag. Bag is still set to finished. \nOutput: ".$delete_result."\nError code returned by the system: ".$errorReturn."***\n\n");
-			next;
-		}
-	}
 }
 
 if (defined ($local_bag_state) && $local_bag_state > "11") { # means have a valid "last" status, but it's not the right one!
