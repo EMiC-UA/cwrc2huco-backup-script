@@ -612,7 +612,7 @@ sub png_that_bag {
 			# -- all --
 			sleep (1); # so as not to hammer the server
 			
-			my $upload_command = "nice /usr/bin/rsync -qogt --partial --partial-dir=".$destination_path."partials ".$file_path."/*.png ". $destination_user."@".$destination_hostname.":".$destination_path;
+			my $upload_command = "/usr/bin/rsync -e ssh -pt --block-size=500 --timeout=10 --partial ".$file_path."/*.png ". $destination_user."@".$destination_hostname.":".$destination_path;
 			debug_message("[command][".$file_filename."] In CWRC-upload: Upload command: ".$upload_command."\n");
 			my $upload_result = `$upload_command  2>&1`;
 			debug_message("[command output][".$file_filename."] In CWRC-upload: Upload command output: ".$upload_result."\n");
